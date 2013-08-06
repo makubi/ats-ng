@@ -33,14 +33,6 @@ of where to look for pages, components and mixins. -->
         <param-value>classpath:/spring.xml</param-value>
     </context-param>
 
-    <context-param>
-        <param-name>tapestry.use-external-spring-context</param-name>
-        <param-value>true</param-value>
-    </context-param>
-    <filter>
-        <filter-name>app</filter-name>
-        <filter-class>org.apache.tapestry5.TapestryFilter</filter-class>
-    </filter>
 
     <filter>
         <filter-name>app</filter-name>
