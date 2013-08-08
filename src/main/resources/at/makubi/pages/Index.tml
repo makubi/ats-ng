@@ -10,8 +10,8 @@
 
     <p>
         <ul>
-            <t:loop source="zones" value="zone">
-                <li>${zone}</li>
+            <t:loop source="zoneService.zones" value="currentZone">
+                <li>${currentZone.name}</li>
             </t:loop>
 
         </ul>

@@ -13,18 +13,10 @@ import java.util.Collection;
 public class ZoneServiceImpl implements ZoneService {
 
     private final ZoneRepository zoneRepository;
-    private final CategoryRepository categoryRepository;
-    private final EntryRepository entryRepository;
-    private final TranslationRepository translationRepository;
-    private final IdentifierRepository identifierRepository;
 
     @Autowired
-    public ZoneServiceImpl(ZoneRepository zoneRepository, CategoryRepository categoryRepository, EntryRepository entryRepository, TranslationRepository translationRepository, IdentifierRepository identifierRepository) throws IOException {
+    public ZoneServiceImpl(ZoneRepository zoneRepository) {
         this.zoneRepository = zoneRepository;
-        this.categoryRepository = categoryRepository;
-        this.entryRepository = entryRepository;
-        this.translationRepository = translationRepository;
-        this.identifierRepository = identifierRepository;
     }
 
     private int count = 0;
@@ -67,10 +59,6 @@ public class ZoneServiceImpl implements ZoneService {
         zone.setEndNumber(200000L);
         zone.setCategories(categories);
 
-        saveIdentifier(identifier);
-        saveTranslations(translations);
-        saveEntries(entries);
-        saveCategories(categories);
         saveZone(zone);
 
         for(Zone zone1 : zoneRepository.findAll()) {
@@ -85,23 +73,4 @@ public class ZoneServiceImpl implements ZoneService {
         zoneRepository.save(zone);
     }
 
-    @Override
-    public void saveCategories(Collection<Category> categories) {
-        categoryRepository.save(categories);
-    }
-
-    @Override
-    public void saveTranslations(Collection<Translation> translations) {
-        translationRepository.save(translations);
-    }
-
-    @Override
-    public void saveEntries(Collection<Entry> entries) {
-        entryRepository.save(entries);
-    }
-
-    @Override
-    public void saveIdentifier(Identifier identifier) {
-        identifierRepository.save(identifier);
-    }
 }

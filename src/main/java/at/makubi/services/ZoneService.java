@@ -11,12 +11,4 @@ public interface ZoneService {
     Collection<Zone> getZones();
 
     void saveZone(Zone zone);
-
-    void saveCategories(Collection<Category> categories);
-
-    void saveTranslations(Collection<Translation> translations);
-
-    void saveEntries(Collection<Entry> entries);
-
-    void saveIdentifier(Identifier identifier);
 }

@@ -14,7 +14,7 @@ public class Category {
     private long startNumber;
     private long endNumber;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Collection<Entry> entries;
 
     public String getName() {

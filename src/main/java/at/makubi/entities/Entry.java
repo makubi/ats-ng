@@ -10,12 +10,12 @@ public class Entry {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Collection<Translation> texts;
 
     private int maxLength = 0;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Identifier identifier;
 
     private String metaInformation;

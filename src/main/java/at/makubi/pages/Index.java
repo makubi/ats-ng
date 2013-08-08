@@ -54,15 +54,16 @@ public class Index
 //    }
 
     @Property
-    private String zone;
+    private Zone currentZone;
 
     @Inject
-    private ZoneService zonesService;
+    @Property
+    private ZoneService zoneService;
 
     public Collection<String> getZones() {
         final Collection<String> zoneNames = new ArrayList<String>();
 
-        for(Zone zone : zonesService.getZones()) {
+        for(Zone zone : zoneService.getZones()) {
             zoneNames.add(zone.getName());
         }
 

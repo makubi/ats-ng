@@ -1,6 +1,7 @@
 package at.makubi.entities;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
@@ -19,7 +20,7 @@ public class Zone {
     @NotNull
     private Long endNumber;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Collection<Category> categories;
 
     public String getName() {
