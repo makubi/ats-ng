@@ -19,7 +19,7 @@ public class ZoneServiceImpl implements ZoneService {
     private final IdentifierRepository identifierRepository;
 
     @Autowired
-    public ZoneServiceImpl(ZoneRepository zoneRepository, CategoryRepository categoryRepository, EntryRepository entryRepository, TranslationRepository translationRepository, IdentifierRepository identifierRepository) {
+    public ZoneServiceImpl(ZoneRepository zoneRepository, CategoryRepository categoryRepository, EntryRepository entryRepository, TranslationRepository translationRepository, IdentifierRepository identifierRepository) throws IOException {
         this.zoneRepository = zoneRepository;
         this.categoryRepository = categoryRepository;
         this.entryRepository = entryRepository;

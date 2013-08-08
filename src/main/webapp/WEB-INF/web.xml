@@ -28,26 +28,6 @@ of where to look for pages, components and mixins. -->
         </param-value>
     </context-param>
 
-    <context-param>
-        <param-name>contextClass</param-name>
-        <param-value>
-            org.springframework.web.context.support.AnnotationConfigWebApplicationContext
-        </param-value>
-    </context-param>
-
-    <context-param>
-        <param-name>tapestry.use-external-spring-context</param-name>
-        <param-value>true</param-value>
-    </context-param>
-
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>at.makubi.ApplicationConfig</param-value>
-    </context-param>
-
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
     <filter>
         <filter-name>app</filter-name>
         <!-- Special filter that adds in a T5 IoC module derived from the Spring WebApplicationContext. -->
