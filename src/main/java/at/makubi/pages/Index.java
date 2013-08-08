@@ -1,50 +1,71 @@
 package at.makubi.pages;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+
+import at.makubi.entities.Zone;
+import at.makubi.services.ZoneService;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.ioc.annotations.*;
-import org.apache.tapestry5.corelib.components.*;
 import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.alerts.AlertManager;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Start page of application ats.
  */
 public class Index
 {
+//    @Property
+//    @Inject
+//    @Symbol(SymbolConstants.TAPESTRY_VERSION)
+//    private String tapestryVersion;
+//
+//    @InjectComponent
+//    private Zone zone;
+//
+//    @Persist
+//    @Property
+//    private int clickCount;
+//
+//    @Inject
+//    private AlertManager alertManager;
+//
+//    public String getCurrentTime()
+//    {
+//        return "A great day to learn Tapestry";
+//    }
+//
+//    void onActionFromIncrement()
+//    {
+//        alertManager.info("Increment clicked");
+//
+//        clickCount++;
+//    }
+//
+//    Object onActionFromIncrementAjax()
+//    {
+//        clickCount++;
+//
+//        alertManager.info("Increment (via Ajax) clicked");
+//
+//        return zone;
+//    }
+
     @Property
-    @Inject
-    @Symbol(SymbolConstants.TAPESTRY_VERSION)
-    private String tapestryVersion;
-
-    @InjectComponent
-    private Zone zone;
-
-    @Persist
-    @Property
-    private int clickCount;
+    private String zone;
 
     @Inject
-    private AlertManager alertManager;
+    private ZoneService zonesService;
 
-    public String getCurrentTime()
-    {
-        return "A great day to learn Tapestry";
-    }
+    public Collection<String> getZones() {
+        final Collection<String> zoneNames = new ArrayList<String>();
 
-    void onActionFromIncrement()
-    {
-        alertManager.info("Increment clicked");
+        for(Zone zone : zonesService.getZones()) {
+            zoneNames.add(zone.getName());
+        }
 
-        clickCount++;
-    }
-
-    Object onActionFromIncrementAjax()
-    {
-        clickCount++;
-
-        alertManager.info("Increment (via Ajax) clicked");
-
-        return zone;
+        return zoneNames;
     }
 }

@@ -6,37 +6,46 @@
 
     <p>${message:greeting}</p>
 
-    <p>The current time is: <strong>${currentTime}</strong></p>
+    <!--<p>The current time is: <strong>${currentTime}</strong></p>-->
+
+    <p>
+        <ul>
+            <t:loop source="zones" value="zone">
+                <li>${zone}</li>
+            </t:loop>
+
+        </ul>
+    </p>
 
     <!-- A Zone is a component that can be updated in place, triggered by other components. -->
-    <t:zone t:id="zone">
-        <p>
-            You have clicked the link <strong>${clickCount}</strong> times.
-        </p>
+    <!--<t:zone t:id="zone">-->
+        <!--<p>-->
+            <!--You have clicked the link <strong>${clickCount}</strong> times.-->
+        <!--</p>-->
 
-        <p>
-            [
-            <t:actionlink t:id="increment">increment</t:actionlink>
-            ]
-            &nbsp;
-            [
-            <t:actionlink t:id="incrementAjax" zone="^">increment (via Ajax)</t:actionlink>
-            ]
-        </p>
+        <!--<p>-->
+            <!--[-->
+            <!--<t:actionlink t:id="increment">increment</t:actionlink>-->
+            <!--]-->
+            <!--&nbsp;-->
+            <!--[-->
+            <!--<t:actionlink t:id="incrementAjax" zone="^">increment (via Ajax)</t:actionlink>-->
+            <!--]-->
+        <!--</p>-->
 
-    </t:zone>
+    <!--</t:zone>-->
 
-    <p:sidebar>
-        <p>
-            You are running Tapestry version <strong>${tapestryVersion}</strong>.
-        </p>
+    <!--<p:sidebar>-->
+        <!--<p>-->
+            <!--You are running Tapestry version <strong>${tapestryVersion}</strong>.-->
+        <!--</p>-->
 
 
-        <p>
-            [
-            <t:pagelink page="Index">refresh page</t:pagelink>
-            ]
-        </p>
-    </p:sidebar>
+        <!--<p>-->
+            <!--[-->
+            <!--<t:pagelink page="Index">refresh page</t:pagelink>-->
+            <!--]-->
+        <!--</p>-->
+    <!--</p:sidebar>-->
 
 </html>
