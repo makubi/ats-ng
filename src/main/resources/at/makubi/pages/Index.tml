@@ -8,14 +8,26 @@
 
     <!--<p>The current time is: <strong>${currentTime}</strong></p>-->
 
+
+    <t:zone t:id="zone">
     <p>
         <ul>
-            <t:loop source="zoneService.zones" value="currentZone">
-                <li>${currentZone.name}</li>
+            <t:loop source="entryService.allEntries" value="currentEntry">
+                <t:loop source="currentEntry.texts" value="currentText">
+                    <li>${currentText.text}</li>
+                </t:loop>
             </t:loop>
 
         </ul>
     </p>
+
+
+
+            <p>
+                <t:actionlink t:id="addRandomEntry" zone="^">addRandomEntry</t:actionlink>
+            </p>
+        </t:zone>
+
 
     <!-- A Zone is a component that can be updated in place, triggered by other components. -->
     <!--<t:zone t:id="zone">-->
