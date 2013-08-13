@@ -1,22 +1,19 @@
 package at.makubi.pages;
 
-import java.io.IOException;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
+import java.util.Random;
 
 import at.makubi.entities.Entry;
 import at.makubi.entities.Identifier;
 import at.makubi.entities.Translation;
 import at.makubi.services.EntryService;
-import at.makubi.services.ZoneService;
 import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.annotations.*;
-import org.apache.tapestry5.SymbolConstants;
-import org.apache.tapestry5.alerts.AlertManager;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Start page of application ats.
@@ -73,27 +70,78 @@ public class Index
     @Property
     private int count;
 
+    @Property
+    private int number;
+    @Property
+    private int subNumber;
+
+    @Property
+    private String language;
+    @Property
+    private String text;
+
+    @Property
+    private String metaInfo;
+    @Property
+    private int maxLength;
+
     Object onActionFromAddRandomEntry() {
+        final int randomNumber = new Random().nextInt();
+
+        final char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+        final StringBuilder sb = new StringBuilder();
+        final Random random = new Random();
+
+        for (int i = 0; i < 20; i++) {
+            char c = chars[random.nextInt(chars.length)];
+            sb.append(c);
+        }
+
+        final String randomString = sb.toString();
+
         Identifier identifier = new Identifier();
-        identifier.setNumber(count++);
-        identifier.setSubNumber(count);
+        identifier.setNumber(randomNumber);
+        identifier.setSubNumber(randomNumber);
 
         Collection<Translation> translations = new ArrayList<Translation>();
 
         Translation translation = new Translation();
-        translation.setCountryCode("de");
-        translation.setText("Hallo " + count);
+        translation.setCountryCode(randomString);
+        translation.setText(randomString);
         translations.add(translation);
 
         Entry entry = new Entry();
         entry.setIdentifier(identifier);
         entry.setTexts(translations);
-        entry.setMetaInformation("meta inf");
-        entry.setMaxLength(10);
+        entry.setMetaInformation(randomString);
+        entry.setMaxLength(randomNumber);
 
         entryService.createEntry(entry);
 
         return zone;
+    }
+
+    Object onSuccess() {
+        Identifier identifier = new Identifier();
+        identifier.setNumber(number);
+        identifier.setSubNumber(subNumber);
+
+        Collection<Translation> translations = new ArrayList<Translation>();
+
+        Translation translation = new Translation();
+        translation.setCountryCode(language);
+        translation.setText(text);
+        translations.add(translation);
+
+        Entry entry = new Entry();
+        entry.setIdentifier(identifier);
+        entry.setTexts(translations);
+        entry.setMetaInformation(metaInfo);
+        entry.setMaxLength(maxLength);
+
+        entryService.createEntry(entry);
+
+        return Index.class;
     }
 
 }
