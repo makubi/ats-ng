@@ -9,7 +9,7 @@ import org.apache.tapestry5.SymbolConstants;
 /**
  * Layout component for pages of application ats.
  */
-@Import(stylesheet = "context:layout/layout.css")
+@Import(stylesheet = {"context:layout/bootstrap/css/bootstrap.css","context:layout/bootstrap/css/bootstrap-responsive.css"})
 public class Layout
 {
     /**
@@ -22,27 +22,13 @@ public class Layout
     @Property
     private String pageName;
 
-    @Property
-    @Parameter(defaultPrefix = BindingConstants.LITERAL)
-    private String sidebarTitle;
-
-    @Property
-    @Parameter(defaultPrefix = BindingConstants.LITERAL)
-    private Block sidebar;
-
     @Inject
     private ComponentResources resources;
-
-    @Property
-    @Inject
-    @Symbol(SymbolConstants.APPLICATION_VERSION)
-    private String appVersion;
-
 
     public String getClassForPageName()
     {
         return resources.getPageName().equalsIgnoreCase(pageName)
-                ? "current_page_item"
+                ? "active"
                 : null;
     }
 
