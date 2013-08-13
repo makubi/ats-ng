@@ -10,4 +10,6 @@ public interface EntryService {
     Iterable<Entry> getAllEntries();
 
     void createEntry(Entry entry);
+
+    Iterable<Entry> getAllEntriesWithText(String text);
 }

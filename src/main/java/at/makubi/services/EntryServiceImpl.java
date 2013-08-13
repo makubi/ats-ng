@@ -24,4 +24,9 @@ public class EntryServiceImpl implements EntryService {
     public void createEntry(Entry entry) {
         entryRepository.save(entry);
     }
+
+    @Override
+    public Iterable<Entry> getAllEntriesWithText(String text) {
+        return entryRepository.findByTexts_TextIgnoreCaseContaining(text);
+    }
 }

@@ -67,75 +67,13 @@ public class Index
     private EntryService entryService;
 
     @Property
-    private int number;
-    @Property
-    private int subNumber;
+    private String searchBox;
 
     @Property
-    private String language;
-    @Property
-    private String text;
+    private Iterable<Entry> foundEntries;
 
-    @Property
-    private String metaInfo;
-    @Property
-    private int maxLength;
-
-    Object onActionFromAddRandomEntry() {
-        final int randomNumber = new Random().nextInt();
-
-        final char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
-        final StringBuilder sb = new StringBuilder();
-        final Random random = new Random();
-
-        for (int i = 0; i < 20; i++) {
-            char c = chars[random.nextInt(chars.length)];
-            sb.append(c);
-        }
-
-        final String randomString = sb.toString();
-
-        Identifier identifier = new Identifier();
-        identifier.setNumber(randomNumber);
-        identifier.setSubNumber(randomNumber);
-
-        Collection<Translation> translations = new ArrayList<Translation>();
-
-        Translation translation = new Translation();
-        translation.setCountryCode(randomString);
-        translation.setText(randomString);
-        translations.add(translation);
-
-        Entry entry = new Entry();
-        entry.setIdentifier(identifier);
-        entry.setTexts(translations);
-        entry.setMetaInformation(randomString);
-        entry.setMaxLength(randomNumber);
-
-        entryService.createEntry(entry);
-
-        return zone;
-    }
-
-    Object onSuccessFromEntryForm() {
-        Identifier identifier = new Identifier();
-        identifier.setNumber(number);
-        identifier.setSubNumber(subNumber);
-
-        Collection<Translation> translations = new ArrayList<Translation>();
-
-        Translation translation = new Translation();
-        translation.setCountryCode(language);
-        translation.setText(text);
-        translations.add(translation);
-
-        Entry entry = new Entry();
-        entry.setIdentifier(identifier);
-        entry.setTexts(translations);
-        entry.setMetaInformation(metaInfo);
-        entry.setMaxLength(maxLength);
-
-        entryService.createEntry(entry);
+    Object onSuccessFromSearchForm() {
+        foundEntries = entryService.getAllEntriesWithText(searchBox);
 
         return zone;
     }

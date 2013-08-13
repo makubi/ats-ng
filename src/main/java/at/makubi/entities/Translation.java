@@ -1,5 +1,7 @@
 package at.makubi.entities;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +19,7 @@ public class Translation {
     private String countryCode;
 
     @NotNull
+    @Length(max = 1000)
     private String text;
 
     public String getCountryCode() {
