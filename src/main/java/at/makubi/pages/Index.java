@@ -66,10 +66,6 @@ public class Index
     @Property
     private EntryService entryService;
 
-    @Persist(PersistenceConstants.FLASH)
-    @Property
-    private int count;
-
     @Property
     private int number;
     @Property
@@ -121,7 +117,7 @@ public class Index
         return zone;
     }
 
-    Object onSuccess() {
+    Object onSuccessFromEntryForm() {
         Identifier identifier = new Identifier();
         identifier.setNumber(number);
         identifier.setSubNumber(subNumber);
@@ -141,7 +137,7 @@ public class Index
 
         entryService.createEntry(entry);
 
-        return Index.class;
+        return zone;
     }
 
 }

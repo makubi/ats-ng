@@ -20,11 +20,12 @@
 
         </ul>
     </p>
+        </t:zone>
 
 
 
         <p>
-            <form t:type="form" t:id="entryForm">
+            <form t:type="form" t:id="entryForm" t:zone="zone">
 
                 <t:errors/>
 
@@ -59,14 +60,14 @@
                 <input t:type="TextField" t:id="metaInfo" size="20" />
                 <br />
                 <br />
-                <input type="submit" value="addEntry" />
+                <input type="submit" value="addEntry" /><br />
+                <input type="reset" value="Reset" />
             </form>
         </p>
 
             <p>
-                <t:actionlink t:id="addRandomEntry" zone="^">addRandomEntry</t:actionlink>
+                <t:actionlink t:id="addRandomEntry" zone="zone">addRandomEntry</t:actionlink>
             </p>
-        </t:zone>
 
 
     <!-- A Zone is a component that can be updated in place, triggered by other components. -->
