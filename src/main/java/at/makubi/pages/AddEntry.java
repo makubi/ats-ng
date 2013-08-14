@@ -3,16 +3,27 @@ package at.makubi.pages;
 import at.makubi.entities.Entry;
 import at.makubi.entities.Identifier;
 import at.makubi.entities.Translation;
+import at.makubi.module.exporter.AndroidExportModule;
+import at.makubi.module.exporter.ExportModule;
 import at.makubi.module.importer.ImportModule;
 import at.makubi.module.importer.lingua.LinguaBaseImportModule;
 import at.makubi.services.EntryService;
+import org.apache.tapestry5.PersistenceConstants;
+import org.apache.tapestry5.StreamResponse;
+import org.apache.tapestry5.annotations.InjectComponent;
+import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.Response;
 import org.apache.tapestry5.upload.services.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -65,11 +76,12 @@ public class AddEntry
         return this;
     }
 
-    public void onSuccessFromUploadFileForm() {
+    Object onSuccessFromUploadFileForm() {
         try {
             LOG.info("Initializing LinguaBaseImportModule...");
 
-            File file = new File(System.getProperty("java.io.tmpdir") + File.separator + uploadedFile.getFileName());
+            File file = File.createTempFile("ats.",".tmp");
+
             uploadedFile.write(file);
 
             ImportModule importModule = new LinguaBaseImportModule(file);
@@ -82,5 +94,6 @@ public class AddEntry
             LOG.warn("Could not initialize LinguaBaseImportModule", e);
         }
 
+        return this;
     }
 }

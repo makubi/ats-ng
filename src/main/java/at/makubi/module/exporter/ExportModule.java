@@ -2,9 +2,10 @@ package at.makubi.module.exporter;
 
 import at.makubi.entities.Entry;
 
+import java.io.File;
 import java.util.Collection;
 
 public interface ExportModule {
 
-    public void export(Iterable<Entry> entryCollection);
+    public File export(Iterable<Entry> entryCollection);
 }

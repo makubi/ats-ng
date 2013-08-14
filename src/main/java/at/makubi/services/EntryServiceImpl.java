@@ -1,9 +1,13 @@
 package at.makubi.services;
 
 import at.makubi.entities.Entry;
+import at.makubi.module.exporter.AndroidExportModule;
+import at.makubi.module.exporter.ExportModule;
 import at.makubi.repositories.EntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.io.File;
 
 @Service
 public class EntryServiceImpl implements EntryService {

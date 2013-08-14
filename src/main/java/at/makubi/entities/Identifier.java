@@ -15,7 +15,7 @@ public class Identifier {
 
     @NotNull
     private Long number;
-    private int subNumber = 1;
+    private int subNumber = -1;
 
     public long getNumber() {
         return number;
