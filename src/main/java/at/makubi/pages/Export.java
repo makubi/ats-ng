@@ -66,9 +66,9 @@ public class Export
 
             uploadedFile.write(file);
 
-            ExportModule androidExportModule = new AndroidExportModule(file);
+            ExportModule androidExportModule = new AndroidExportModule();
 
-            downloadFiles.add(new DownloadFile(id++, uploadedFile.getFileName(), androidExportModule.export(entryService.getAllEntries())));
+            downloadFiles.add(new DownloadFile(id++, uploadedFile.getFileName(), androidExportModule.export(file, entryService.getAllEntries())));
         }
         catch (Exception e) {
             LOG.warn("Could not initialize AndroidExportModule", e);

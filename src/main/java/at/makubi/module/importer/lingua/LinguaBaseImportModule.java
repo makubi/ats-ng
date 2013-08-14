@@ -6,6 +6,7 @@ import at.makubi.entities.Translation;
 import at.makubi.module.importer.ImportModule;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,16 +16,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component
 public class LinguaBaseImportModule implements ImportModule {
 
-    private final File file;
-
-    public LinguaBaseImportModule(File file) {
-        this.file = file;
-    }
-
     @Override
-    public Iterable<Entry> getEntriesForImport() {
+    public Iterable<Entry> getEntriesForImport(File file) {
         Collection<Entry> entries = new ArrayList<Entry>();
 
         try {

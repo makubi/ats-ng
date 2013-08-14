@@ -50,9 +50,6 @@ public class AddEntry
     @Property
     private int maxLength;
 
-    @Property
-    private UploadedFile uploadedFile;
-
     Object onSuccessFromEntryForm() {
         Identifier identifier = new Identifier();
         identifier.setNumber(number);
@@ -76,24 +73,4 @@ public class AddEntry
         return this;
     }
 
-    Object onSuccessFromUploadFileForm() {
-        try {
-            LOG.info("Initializing LinguaBaseImportModule...");
-
-            File file = File.createTempFile("ats.",".tmp");
-
-            uploadedFile.write(file);
-
-            ImportModule importModule = new LinguaBaseImportModule(file);
-
-            for(Entry entry : importModule.getEntriesForImport()) {
-                entryService.createEntry(entry);
-            }
-        }
-        catch (Exception e) {
-            LOG.warn("Could not initialize LinguaBaseImportModule", e);
-        }
-
-        return this;
-    }
 }

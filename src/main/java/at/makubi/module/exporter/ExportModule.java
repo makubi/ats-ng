@@ -7,5 +7,5 @@ import java.util.Collection;
 
 public interface ExportModule {
 
-    public File export(Iterable<Entry> entryCollection);
+    public File export(File file, Iterable<Entry> entryCollection);
 }

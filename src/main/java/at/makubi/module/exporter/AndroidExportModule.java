@@ -3,6 +3,7 @@ package at.makubi.module.exporter;
 import at.makubi.entities.Entry;
 import at.makubi.entities.Identifier;
 import at.makubi.entities.Translation;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
@@ -18,16 +19,11 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 
+@Component
 public class AndroidExportModule implements ExportModule {
 
-    private final File file;
-
-    public AndroidExportModule(File file) {
-        this.file = file;
-    }
-
     @Override
-    public File export(Iterable<Entry> entryCollection) {
+    public File export(File file, Iterable<Entry> entryCollection) {
         final File outputFile;
 
         try {

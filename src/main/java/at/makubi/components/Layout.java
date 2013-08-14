@@ -34,6 +34,6 @@ public class Layout
 
     public String[] getPageNames()
     {
-        return new String[]{"Index", "AddEntry", "Export"};
+        return new String[]{"Index", "AddEntry", "Import", "Export"};
     }
 }
