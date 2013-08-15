@@ -7,7 +7,7 @@
             <input t:type="upload" t:id="uploadedFile" t:value="uploadedFile" validate="required"/>
             <br />
             <br/>
-            <t:radiogroup t:id="selectedModule">
+            <t:radiogroup t:id="selectedModule" validate="required">
                 <t:loop source="availableModules" value="currentModule">
                     <t:radio t:id="radio" value="currentModule"/>
                     <t:label for="radio">${simpleName}</t:label>

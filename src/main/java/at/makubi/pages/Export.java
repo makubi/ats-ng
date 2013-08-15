@@ -6,6 +6,8 @@ import at.makubi.module.exporter.ExportModule;
 import at.makubi.module.importer.ImportModule;
 import at.makubi.module.importer.lingua.LinguaBaseImportModule;
 import at.makubi.services.EntryService;
+import at.makubi.services.ExportModuleService;
+import at.makubi.services.ImportModuleService;
 import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.annotations.InjectComponent;
@@ -24,11 +26,22 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
 
 public class Export
 {
 
     private static final Logger LOG = LoggerFactory.getLogger(Export.class);
+
+    @Inject
+    @Property
+    private ExportModuleService exportModuleService;
+
+    @Property
+    private String currentModule;
+
+    @Property
+    private String selectedModule;
 
     @Inject
     @Property
@@ -66,7 +79,7 @@ public class Export
 
             uploadedFile.write(file);
 
-            ExportModule androidExportModule = new AndroidExportModule();
+            ExportModule androidExportModule = exportModuleService.getModuleByName(selectedModule);
 
             downloadFiles.add(new DownloadFile(id++, uploadedFile.getFileName(), androidExportModule.export(file, entryService.getAllEntries())));
         }
@@ -130,6 +143,14 @@ public class Export
         public int getId() {
             return id;
         }
+    }
+
+    public Set<String> getAvailableModules() {
+        return exportModuleService.getModuleNames();
+    }
+
+    public String getSimpleName() {
+        return currentModule.substring(currentModule.lastIndexOf(".") + 1, currentModule.length());
     }
 
 }

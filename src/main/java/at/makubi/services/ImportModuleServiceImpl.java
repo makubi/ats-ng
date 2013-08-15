@@ -17,8 +17,6 @@ public class ImportModuleServiceImpl implements ImportModuleService {
 
     @Autowired
     public ImportModuleServiceImpl(Collection<ImportModule> importModules) {
-        System.out.println("length: " + importModules);
-
         this.importModules = importModules;
 
         for(ImportModule importModule : importModules) {

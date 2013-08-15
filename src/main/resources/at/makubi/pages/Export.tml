@@ -6,10 +6,19 @@
         <t:form t:type="form" t:id="uploadFileForm">
             <t:errors/>
             <input t:type="upload" t:id="uploadedFile" t:value="uploadedFile" validate="required"/>
-            <br/><br/>
+            <br />
+            <br/>
+            <t:radiogroup t:id="selectedModule" validate="required">
+                <t:loop source="availableModules" value="currentModule">
+                    <t:radio t:id="radio" value="currentModule"/>
+                    <t:label for="radio">${simpleName}</t:label>
+                    <br />
+                </t:loop>
+            </t:radiogroup>
+            <br />
+            <br />
             <input type="submit" value="Upload"/>
         </t:form>
-        <br /><br />
     </p>
 
     <t:zone t:id="zone">
