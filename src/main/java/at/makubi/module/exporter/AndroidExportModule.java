@@ -42,31 +42,39 @@ public class AndroidExportModule implements ExportModule {
                 Node item = childNodes.item(i);
 
                 if ("string".equals(item.getNodeName())) {
-                    String linguaNumber = item.getAttributes().getNamedItem("lingua").getTextContent();
-                    final String[] linguaIdentifier = linguaNumber.split("\\.");
-                    final long attributeLinguaNumber = Long.parseLong(linguaIdentifier[0]);
-                    final int attributeLinguaSubNumber = linguaIdentifier.length > 1 ? Integer.parseInt(linguaIdentifier[1]) : -1;
+                    Node linguaAttribute = item.getAttributes().getNamedItem("lingua");
 
-                    final String linguaNumberWithoutLeadingZeros = attributeLinguaNumber + "." + attributeLinguaSubNumber;
+                    if(linguaAttribute != null) {
+                        String linguaNumber = linguaAttribute.getTextContent();
 
-                    for (Entry entry : entryCollection) {
-                        final Identifier identifier = entry.getIdentifier();
-                        final long number = identifier.getNumber();
-                        final int subNumber = identifier.getSubNumber();
+                        // if we find a lingua number without sub-number, pretend it is .01
+                        if(!linguaNumber.contains(".")) {
+                            linguaNumber += ".01";
+                        }
 
 
-                        final String linguaNumberString = subNumber > 0 ? number + "." + subNumber : "" + number;
+                        for (Entry entry : entryCollection) {
+                            final Identifier identifier = entry.getIdentifier();
 
-                        if (linguaNumberString.matches(linguaNumberWithoutLeadingZeros)) {
-                            for (Translation translation : entry.getTexts()) {
-                                if ("de".matches(translation.getCountryCode())) {
-                                    item.setTextContent(translation.getText());
+                            final String linguaNumberString = identifier.getText();
+
+                            if (linguaNumberString.matches(linguaNumber)) {
+                                for (Translation translation : entry.getTexts()) {
+                                    if ("de".matches(translation.getCountryCode())) {
+                                        item.setTextContent(translation.getText());
+                                    }
+                                    // TODO fallback
                                 }
                             }
                         }
                     }
+                    else {
+                        removeNode(item);
+                    }
 
                 }
+                // TODO delete comments
+                // TODO delete bools,...
 
             }
 
@@ -91,4 +99,9 @@ public class AndroidExportModule implements ExportModule {
 
         return outputFile;
     }
+
+    private void removeNode(Node node) {
+        node.getParentNode().removeChild(node);
+    }
+
 }

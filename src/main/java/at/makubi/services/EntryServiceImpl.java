@@ -1,5 +1,6 @@
 package at.makubi.services;
 
+import at.makubi.Task;
 import at.makubi.entities.Entry;
 import at.makubi.module.exporter.AndroidExportModule;
 import at.makubi.module.exporter.ExportModule;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Service
 public class EntryServiceImpl implements EntryService {
@@ -30,7 +33,19 @@ public class EntryServiceImpl implements EntryService {
     }
 
     @Override
+    public void createEntries(final Iterable<Entry> entries) {
+        for (Entry entry : entries) {
+            createEntry(entry);
+        }
+    }
+
+    @Override
     public Iterable<Entry> getAllEntriesWithText(String text) {
         return entryRepository.findByTexts_TextIgnoreCaseContaining(text);
+    }
+
+    @Override
+    public boolean exists(String identifier) {
+        return entryRepository.numRows(identifier) > 0;
     }
 }

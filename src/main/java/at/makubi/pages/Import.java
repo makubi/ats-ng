@@ -1,8 +1,6 @@
 package at.makubi.pages;
 
-import at.makubi.entities.Entry;
 import at.makubi.module.importer.ImportModule;
-import at.makubi.services.EntryService;
 import at.makubi.services.ImportModuleService;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -20,10 +18,6 @@ public class Import
     @Inject
     @Property
     private ImportModuleService importModuleService;
-
-    @Inject
-    @Property
-    private EntryService entryService;
 
     @Property
     private UploadedFile uploadedFile;
@@ -52,9 +46,7 @@ public class Import
 
             final ImportModule importModule = importModuleService.getModuleByName(selectedModule);
 
-            for(Entry entry : importModule.getEntriesForImport(file)) {
-                entryService.createEntry(entry);
-            }
+            importModuleService.importFromFile(importModule, file);
         }
         catch (Exception e) {
             LOG.warn("Could not initialize LinguaBaseImportModule", e);

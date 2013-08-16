@@ -5,6 +5,7 @@ import at.makubi.pages.Import;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -16,4 +17,6 @@ public interface ImportModuleService {
     Set<String> getModuleNames();
 
     ImportModule getModuleByName(String name);
+
+    void importFromFile(ImportModule importModule, File file);
 }

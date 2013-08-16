@@ -1,10 +1,15 @@
 package at.makubi.components;
 
+import at.makubi.Task;
+import at.makubi.services.TaskService;
 import org.apache.tapestry5.*;
 import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.corelib.components.Zone;
+import org.apache.tapestry5.corelib.mixins.ZoneRefresh;
 import org.apache.tapestry5.ioc.annotations.*;
 import org.apache.tapestry5.BindingConstants;
-import org.apache.tapestry5.SymbolConstants;
+
+import java.util.Collection;
 
 /**
  * Layout component for pages of application ats.
@@ -24,6 +29,23 @@ public class Layout
 
     @Inject
     private ComponentResources resources;
+
+    @Property
+    private Task currentTask;
+
+    @Inject
+    private TaskService taskService;
+
+    @InjectComponent
+    private Zone taskZone;
+
+    public Collection<Task> getTasks() {
+        return taskService.getTasks();
+    }
+
+    Object onRefreshTaskZone() {
+        return taskZone.getBody();
+    }
 
     public String getClassForPageName()
     {

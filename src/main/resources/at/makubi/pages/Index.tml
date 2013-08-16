@@ -29,7 +29,7 @@
         <ul>
             <t:loop source="foundEntries" value="currentEntry">
                 <t:loop source="currentEntry.texts" value="currentText">
-                    <li>${currentEntry.identifier.number}.${currentEntry.identifier.subNumber}: ${currentText.text}</li>
+                    <li>${currentEntry.identifier.text}: ${currentText.text}</li>
                 </t:loop>
             </t:loop>
 

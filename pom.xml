@@ -145,7 +145,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
                 <artifactId>guava</artifactId>
                 <version>14.0.1</version>
             </dependency>
-    </dependencies>
+        </dependencies>
     <build>
         <finalName>ats</finalName>
         <plugins>

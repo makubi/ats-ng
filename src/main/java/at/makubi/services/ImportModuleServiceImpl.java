@@ -1,9 +1,11 @@
 package at.makubi.services;
 
+import at.makubi.Task;
 import at.makubi.module.importer.ImportModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,9 +17,14 @@ public class ImportModuleServiceImpl implements ImportModuleService {
     private final Collection<ImportModule> importModules;
     private final Map<String, ImportModule> stringImportModuleMap = new HashMap<String, ImportModule>();
 
+    private final EntryService entryService;
+    private final TaskService taskService;
+
     @Autowired
-    public ImportModuleServiceImpl(Collection<ImportModule> importModules) {
+    public ImportModuleServiceImpl(Collection<ImportModule> importModules, EntryService entryService, TaskService taskService) {
         this.importModules = importModules;
+        this.entryService = entryService;
+        this.taskService = taskService;
 
         for(ImportModule importModule : importModules) {
             stringImportModuleMap.put(importModule.getClass().getCanonicalName(), importModule);
@@ -37,6 +44,16 @@ public class ImportModuleServiceImpl implements ImportModuleService {
     @Override
     public ImportModule getModuleByName(String name) {
         return stringImportModuleMap.get(name);
+    }
+
+    @Override
+    public void importFromFile(final ImportModule importModule, final File file) {
+        taskService.addTask(new Task("Importing " + file.getName() + " with module " + importModule.getClass().getSimpleName()) {
+            @Override
+            public void execute() {
+                entryService.createEntries(importModule.getEntriesForImport(file));
+            }
+        });
     }
 
 }

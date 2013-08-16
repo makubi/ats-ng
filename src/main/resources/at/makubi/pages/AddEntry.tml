@@ -7,11 +7,9 @@
 
             <t:errors/>
 
-            <t:label for="number" />
-            <t:label for="subNumber" />
+            <t:label for="identifier" />
             <br />
-            <input t:type="TextField" t:id="number" t:validate="required" size="10" />
-            <input t:type="TextField" t:id="subNumber" size="5" />
+            <input t:type="TextField" t:id="identifier" t:validate="required" size="10" />
             <br />
             <br />
 

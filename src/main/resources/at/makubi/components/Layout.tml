@@ -95,6 +95,13 @@ Description: A Web 2.0 design with fluid width suitable for blogs and small webs
             <div class="masthead">
                 <h3 class="muted">at.makubi:ats</h3>
                 <div class="navbar">
+                    <t:zone t:id="taskZone" t:mixins="ZoneRefresh" t:period="5">
+                        <ul>
+                            <t:loop source="tasks" value="currentTask">
+                                <li>${currentTask.name}: ${currentTask.status}</li>
+                            </t:loop>
+                        </ul>
+                    </t:zone>
                     <div class="navbar-inner">
                         <div class="container">
                             <ul class="nav">

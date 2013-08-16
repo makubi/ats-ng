@@ -4,6 +4,7 @@ import at.makubi.module.exporter.ExportModule;
 import at.makubi.module.importer.ImportModule;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.Set;
 
@@ -15,4 +16,6 @@ public interface ExportModuleService {
     Set<String> getModuleNames();
 
     ExportModule getModuleByName(String name);
+
+    File exportForFile(ExportModule exportModule, File file);
 }

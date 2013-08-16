@@ -11,5 +11,9 @@ public interface EntryService {
 
     void createEntry(Entry entry);
 
+    void createEntries(Iterable<Entry> entries);
+
     Iterable<Entry> getAllEntriesWithText(String text);
+
+    boolean exists(String identifier);
 }

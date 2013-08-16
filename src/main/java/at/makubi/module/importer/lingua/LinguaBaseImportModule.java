@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,24 +22,26 @@ public class LinguaBaseImportModule implements ImportModule {
 
     @Override
     public Iterable<Entry> getEntriesForImport(File file) {
-        Collection<Entry> entries = new ArrayList<Entry>();
+        final Collection<Entry> entries = new ArrayList<Entry>();
 
         try {
+            final List<LinguaEntry> linguaEntries = Collections.unmodifiableList(getLinguaEntries(file));
 
-            List<LinguaEntry> linguaEntries = getLinguaEntries(file);
+            for(int i = 0; i < linguaEntries.size(); i++) {
+                final LinguaEntry linguaEntry = linguaEntries.get(i);
 
-            for(LinguaEntry linguaEntry : linguaEntries) {
-                Entry entry = new Entry();
+                final Entry entry = new Entry();
 
-                Collection<Translation> translations = new ArrayList<Translation>();
-                Translation translation = new Translation();
+                final Collection<Translation> translations = new ArrayList<Translation>();
+                final Translation translation = new Translation();
                 translation.setCountryCode("de");
                 translation.setText(linguaEntry.getText());
                 translations.add(translation);
 
-                Identifier identifier = new Identifier();
-                identifier.setNumber(linguaEntry.getIdentifier());
-                identifier.setSubNumber(getSubNumber(linguaEntry, linguaEntries));
+                final Identifier identifier = new Identifier();
+                final long linguaNumber = linguaEntry.getIdentifier();
+                final long linguaSubNumber = getSubNumber(linguaEntry, linguaEntries.subList(0, i));
+                identifier.setText(linguaNumber + "." + (linguaSubNumber < 10 ? "0" + linguaSubNumber : linguaSubNumber));
 
                 entry.setTexts(translations);
                 entry.setMaxLength(linguaEntry.getMaxLength());
@@ -55,9 +58,9 @@ public class LinguaBaseImportModule implements ImportModule {
     }
 
     private List<LinguaEntry> getLinguaEntries(File file) throws IOException {
-        List<LinguaEntry> linguaEntries = new ArrayList<LinguaEntry>();
+        final List<LinguaEntry> linguaEntries = new ArrayList<LinguaEntry>();
 
-        List<String> lines = Files.readLines(file, Charsets.ISO_8859_1);
+        final Iterable<String> lines = Files.readLines(file, Charsets.ISO_8859_1);
 
         for(String line : lines) {
             Pattern pattern = Pattern.compile("[\\t\\s]*([0-9]+),[\\t\\s]*([0-9]+),[\\t\\s]*\"(.*)\",");
@@ -73,29 +76,17 @@ public class LinguaBaseImportModule implements ImportModule {
         return linguaEntries;
     }
 
-    private int getSubNumber(LinguaEntry linguaEntry, Collection<LinguaEntry> linguaEntries) {
-        String entryText = linguaEntry.getText();
-        long entryNumber = linguaEntry.getIdentifier();
-        int maxLength = linguaEntry.getMaxLength();
+    private int getSubNumber(LinguaEntry linguaEntry, Collection<LinguaEntry> yetAddedLinguaEntries) {
+        final long entryNumber = linguaEntry.getIdentifier();
 
-        int count = 0;
+        int count = 1;
 
-        for(LinguaEntry entry : linguaEntries) {
+        for(LinguaEntry entry : yetAddedLinguaEntries) {
             if(entry.getIdentifier() == entryNumber) {
                 count++;
-
-                if(entry.getText().equals(entryText) && entry.getMaxLength() == maxLength) {
-                    if(count == 0) {
-                        throw new RuntimeException("These two texts match in number, maxLength, text: " + entryNumber + " / " + entry.getIdentifier());
-                    }
-
-                    return count;
-                }
             }
-
-
         }
 
-        throw new RuntimeException(linguaEntry.getText() + " not found");
+        return count;
     }
 }

@@ -10,6 +10,7 @@ import at.makubi.module.importer.lingua.LinguaBaseImportModule;
 import at.makubi.services.EntryService;
 import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.StreamResponse;
+import org.apache.tapestry5.ValidationException;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
@@ -17,9 +18,12 @@ import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Response;
 import org.apache.tapestry5.upload.services.UploadedFile;
+import org.h2.jdbc.JdbcSQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 
+import javax.validation.ConstraintViolationException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -36,9 +40,7 @@ public class AddEntry
     private EntryService entryService;
 
     @Property
-    private int number;
-    @Property
-    private int subNumber;
+    private String identifier;
 
     @Property
     private String language;
@@ -50,10 +52,15 @@ public class AddEntry
     @Property
     private int maxLength;
 
+    void onValidateFromIdentifier(String identifier) throws ValidationException {
+        if(entryService.exists(identifier)) {
+            throw new ValidationException("An entry with that identifier exists");
+        }
+    }
+
     Object onSuccessFromEntryForm() {
         Identifier identifier = new Identifier();
-        identifier.setNumber(number);
-        identifier.setSubNumber(subNumber);
+        identifier.setText(this.identifier);
 
         Collection<Translation> translations = new ArrayList<Translation>();
 

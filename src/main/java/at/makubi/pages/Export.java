@@ -43,10 +43,6 @@ public class Export
     @Property
     private String selectedModule;
 
-    @Inject
-    @Property
-    private EntryService entryService;
-
     @InjectComponent
     private Zone zone;
 
@@ -79,9 +75,9 @@ public class Export
 
             uploadedFile.write(file);
 
-            ExportModule androidExportModule = exportModuleService.getModuleByName(selectedModule);
+            ExportModule exportModule = exportModuleService.getModuleByName(selectedModule);
 
-            downloadFiles.add(new DownloadFile(id++, uploadedFile.getFileName(), androidExportModule.export(file, entryService.getAllEntries())));
+            downloadFiles.add(new DownloadFile(id++, uploadedFile.getFileName(), exportModuleService.exportForFile(exportModule, file)));
         }
         catch (Exception e) {
             LOG.warn("Could not initialize AndroidExportModule", e);
