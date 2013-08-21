@@ -16,4 +16,6 @@ public interface EntryService {
     Iterable<Entry> getAllEntriesWithText(String text);
 
     boolean exists(String identifier);
+
+    Entry getEntryById(long id);
 }

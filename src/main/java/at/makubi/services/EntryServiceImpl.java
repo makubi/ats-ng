@@ -48,4 +48,9 @@ public class EntryServiceImpl implements EntryService {
     public boolean exists(String identifier) {
         return entryRepository.numRows(identifier) > 0;
     }
+
+    @Override
+    public Entry getEntryById(long id) {
+        return entryRepository.findOne(id);
+    }
 }

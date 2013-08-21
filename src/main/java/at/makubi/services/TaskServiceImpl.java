@@ -1,6 +1,8 @@
 package at.makubi.services;
 
 import at.makubi.Task;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -10,6 +12,8 @@ import java.util.concurrent.*;
 
 @Service
 public class TaskServiceImpl implements TaskService {
+
+    private final static Logger LOG = LoggerFactory.getLogger(TaskService.class);
 
     private final Collection<Task> tasks = new ArrayList<Task>();
 
@@ -30,6 +34,7 @@ public class TaskServiceImpl implements TaskService {
                             task.setStatus(Task.Status.FINISHED);
                         }
                         catch (Exception e) {
+                            LOG.error("Unable to execute task", e);
                             task.setStatus(Task.Status.ERROR);
                         }
 

@@ -12,6 +12,8 @@ import at.makubi.entities.Translation;
 import at.makubi.services.EntryService;
 import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.corelib.components.Form;
+import org.apache.tapestry5.corelib.components.Grid;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.annotations.*;
 
@@ -60,7 +62,7 @@ public class Index
     private Entry currentEntry;
 
     @Property
-    private Translation currentText;
+    private Translation currentTranslation;
 
     @Inject
     @Property
@@ -70,6 +72,7 @@ public class Index
     private String searchBox;
 
     @Property
+    @Persist
     private Iterable<Entry> foundEntries;
 
     Object onSuccessFromSearchForm() {

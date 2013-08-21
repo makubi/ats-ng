@@ -26,14 +26,16 @@
 
     <t:zone t:id="zone">
     <p>
-        <ul>
-            <t:loop source="foundEntries" value="currentEntry">
-                <t:loop source="currentEntry.texts" value="currentText">
-                    <li>${currentEntry.identifier.text}: ${currentText.text}</li>
+        <t:grid t:id="grid" source="foundEntries" row="currentEntry" t:add="identifier,text" reorder="identifier,text,maxLength,metaInformation" inPlace="true">
+            <p:identifierCell>
+                ${currentEntry.identifier.text}
+            </p:identifierCell>
+            <p:textCell>
+                <t:loop source="currentEntry.texts" value="currentTranslation">
+                    ${currentTranslation.text} (${currentTranslation.countryCode}),
                 </t:loop>
-            </t:loop>
-
-        </ul>
+            </p:textCell>
+        </t:grid>
     </p>
         </t:zone>
 
