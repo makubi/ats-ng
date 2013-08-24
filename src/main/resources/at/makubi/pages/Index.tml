@@ -25,19 +25,19 @@
     </p>
 
     <t:zone t:id="zone">
-    <p>
-        <t:grid t:id="grid" source="foundEntries" row="currentEntry" t:add="identifier,text" reorder="identifier,text,maxLength,metaInformation" inPlace="true">
-            <p:identifierCell>
-                ${currentEntry.identifier.text}
-            </p:identifierCell>
-            <p:textCell>
-                <t:loop source="currentEntry.texts" value="currentTranslation">
-                    ${currentTranslation.text} (${currentTranslation.countryCode}),
-                </t:loop>
-            </p:textCell>
-        </t:grid>
-    </p>
-        </t:zone>
+        <p>
+            <t:grid t:id="grid" source="foundEntries" row="currentEntry" t:add="identifier,text" inPlace="true" reorder="identifier,text,maxLength,metaInformation">
+                <p:identifierCell>
+                    ${currentEntry.identifier.text}
+                </p:identifierCell>
+                <p:textCell>
+                    <t:loop source="currentEntry.texts" value="currentTranslation">
+                        ${currentTranslation.text} (${currentTranslation.countryCode}),
+                    </t:loop>
+                </p:textCell>
+            </t:grid>
+        </p>
+    </t:zone>
 
     <!-- A Zone is a component that can be updated in place, triggered by other components. -->
     <!--<t:zone t:id="zone">-->

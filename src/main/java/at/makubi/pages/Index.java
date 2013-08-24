@@ -69,15 +69,14 @@ public class Index
     private EntryService entryService;
 
     @Property
+    @Persist(PersistenceConstants.CLIENT)
     private String searchBox;
 
-    @Property
-    @Persist
-    private Iterable<Entry> foundEntries;
+    public Iterable<Entry> getFoundEntries() {
+        return searchBox != null ? entryService.getAllEntriesWithText(searchBox) : new ArrayList<Entry>();
+    }
 
     Object onSuccessFromSearchForm() {
-        foundEntries = entryService.getAllEntriesWithText(searchBox);
-
         return zone;
     }
 
