@@ -2,6 +2,7 @@ package at.makubi.module.importer.lingua;
 
 import at.makubi.entities.Entry;
 import at.makubi.entities.Identifier;
+import at.makubi.entities.Language;
 import at.makubi.entities.Translation;
 import at.makubi.module.importer.ImportModule;
 import com.google.common.base.Charsets;
@@ -20,8 +21,20 @@ import java.util.regex.Pattern;
 @Component
 public class LinguaBaseImportModule implements ImportModule {
 
+    private Language getLanguageForGerman(Iterable<Language> availableLanguages) {
+        for(Language language : availableLanguages) {
+            if("de".equals(language.getCode())) {
+                return language;
+            }
+        }
+
+        throw new RuntimeException("Unable to find Language for 'de'");
+    }
+
     @Override
-    public Iterable<Entry> getEntriesForImport(File file) {
+    public Iterable<Entry> getEntriesForImport(File file, Iterable<Language> availableLanguages) {
+        final Language de = getLanguageForGerman(availableLanguages);
+
         final Collection<Entry> entries = new ArrayList<Entry>();
 
         try {
@@ -34,7 +47,7 @@ public class LinguaBaseImportModule implements ImportModule {
 
                 final Collection<Translation> translations = new ArrayList<Translation>();
                 final Translation translation = new Translation();
-                translation.setCountryCode("de");
+                translation.setLanguage(de);
                 translation.setText(linguaEntry.getText());
                 translations.add(translation);
 

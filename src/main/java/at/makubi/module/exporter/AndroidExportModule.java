@@ -60,7 +60,7 @@ public class AndroidExportModule implements ExportModule {
 
                             if (linguaNumberString.matches(linguaNumber)) {
                                 for (Translation translation : entry.getTexts()) {
-                                    if ("de".matches(translation.getCountryCode())) {
+                                    if ("de".matches(translation.getLanguage().getCode())) {
                                         item.setTextContent(translation.getText());
                                     }
                                     // TODO fallback

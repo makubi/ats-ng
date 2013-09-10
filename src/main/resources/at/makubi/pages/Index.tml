@@ -32,7 +32,7 @@
                 </p:identifierCell>
                 <p:textCell>
                     <t:loop source="currentEntry.texts" value="currentTranslation">
-                        ${currentTranslation.text} (${currentTranslation.countryCode}),
+                        ${currentTranslation.text} (${currentTranslation.language.code}),
                     </t:loop>
                 </p:textCell>
             </t:grid>

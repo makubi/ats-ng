@@ -19,12 +19,14 @@ public class ImportModuleServiceImpl implements ImportModuleService {
 
     private final EntryService entryService;
     private final TaskService taskService;
+    private final LanguageService languageService;
 
     @Autowired
-    public ImportModuleServiceImpl(Collection<ImportModule> importModules, EntryService entryService, TaskService taskService) {
+    public ImportModuleServiceImpl(Collection<ImportModule> importModules, EntryService entryService, TaskService taskService, LanguageService languageService) {
         this.importModules = importModules;
         this.entryService = entryService;
         this.taskService = taskService;
+        this.languageService = languageService;
 
         for(ImportModule importModule : importModules) {
             stringImportModuleMap.put(importModule.getClass().getCanonicalName(), importModule);
@@ -51,7 +53,7 @@ public class ImportModuleServiceImpl implements ImportModuleService {
         taskService.addTask(new Task("Importing " + file.getName() + " with module " + importModule.getClass().getSimpleName()) {
             @Override
             public void execute() {
-                entryService.createEntries(importModule.getEntriesForImport(file));
+                entryService.createEntries(importModule.getEntriesForImport(file, languageService.getAvailableLanguages()));
             }
         });
     }

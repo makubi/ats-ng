@@ -2,10 +2,7 @@ package at.makubi.entities;
 
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -16,18 +13,19 @@ public class Translation {
     private Long id;
 
     @NotNull
-    private String countryCode;
+    @ManyToOne
+    private Language language;
 
     @NotNull
     @Length(max = 1000)
     private String text;
 
-    public String getCountryCode() {
-        return countryCode;
+    public Language getLanguage() {
+        return language;
     }
 
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
+    public void setLanguage(Language language) {
+        this.language = language;
     }
 
     public String getText() {

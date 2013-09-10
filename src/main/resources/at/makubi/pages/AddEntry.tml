@@ -13,9 +13,9 @@
             <br />
             <br />
 
-            <t:label for="language" />
+            <t:label for="availableLanguages" />
             <br />
-            <input t:type="TextField" t:id="language" t:validate="required" size="2" />
+            <t:select t:id="availableLanguages" model="availableLanguages" value="language" t:validate="required" />
             <br />
             <br />
 
