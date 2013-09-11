@@ -53,6 +53,7 @@ public class AddEntry
         }
     }
 
+    // TODO liste wird nicht immer vollstaendig angezeigt
     public Iterable<String> getAvailableLanguages() {
         return languageService.getAvailableLanguageNames();
     }

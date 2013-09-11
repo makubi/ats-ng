@@ -1,9 +1,13 @@
 package at.makubi.services;
 
 import at.makubi.entities.Entry;
+import at.makubi.entities.Language;
 import at.makubi.repositories.EntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Service
 public class EntryServiceImpl implements EntryService {
@@ -34,7 +38,19 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     public Iterable<Entry> getAllEntriesWithText(String text) {
-        return entryRepository.findByTexts_TextIgnoreCaseContaining(text);
+        final Collection<Entry> textsContaining = makeCollection(entryRepository.findByTexts_TextIgnoreCaseContaining(text));
+        final Collection<Entry> identifierContaining = makeCollection(entryRepository.findByIdentifier_TextIgnoreCaseContaining(text));
+        textsContaining.addAll(identifierContaining);
+
+        return textsContaining;
+    }
+
+    public static <E> Collection<E> makeCollection(Iterable<E> iter) {
+        Collection<E> list = new ArrayList<E>();
+        for (E item : iter) {
+            list.add(item);
+        }
+        return list;
     }
 
     @Override

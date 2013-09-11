@@ -12,4 +12,6 @@ public interface EntryRepository extends CrudRepository<Entry, Long> {
 
     @Query("SELECT COUNT(*) FROM Entry e WHERE e.identifier.text = ?1")
     long numRows(String identifier);
+
+    Iterable<Entry> findByIdentifier_TextIgnoreCaseContaining(String text);
 }

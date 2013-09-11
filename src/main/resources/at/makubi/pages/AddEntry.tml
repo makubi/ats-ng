@@ -13,7 +13,7 @@
             <br />
             <br />
 
-            <t:label for="availableLanguages" />
+            <t:label for="availableLanguages">Language</t:label>
             <br />
             <t:select t:id="availableLanguages" model="availableLanguages" value="language" t:validate="required" />
             <br />

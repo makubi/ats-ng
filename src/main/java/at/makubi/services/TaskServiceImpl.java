@@ -35,11 +35,11 @@ public class TaskServiceImpl implements TaskService {
                         }
                         catch (Exception e) {
                             LOG.error("Unable to execute task", e);
-                            task.setStatus(Task.Status.ERROR);
+                            task.setStatus(Task.Status.ERROR + ": " + e.getMessage());
                         }
 
                     } catch (InterruptedException e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                        throw new RuntimeException(e);
                     }
 
                 }

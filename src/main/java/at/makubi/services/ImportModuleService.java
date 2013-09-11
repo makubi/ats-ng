@@ -2,6 +2,7 @@ package at.makubi.services;
 
 import at.makubi.module.importer.ImportModule;
 import at.makubi.pages.Import;
+import org.apache.tapestry5.upload.services.UploadedFile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,5 +19,5 @@ public interface ImportModuleService {
 
     ImportModule getModuleByName(String name);
 
-    void importFromFile(ImportModule importModule, File file);
+    void importFromFile(ImportModule importModule, UploadedFile file);
 }

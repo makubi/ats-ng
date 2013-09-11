@@ -40,13 +40,9 @@ public class Import
         try {
             LOG.info("Initializing LinguaBaseImportModule...");
 
-            final File file = File.createTempFile("ats.",".tmp");
-
-            uploadedFile.write(file);
-
             final ImportModule importModule = importModuleService.getModuleByName(selectedModule);
 
-            importModuleService.importFromFile(importModule, file);
+            importModuleService.importFromFile(importModule, uploadedFile);
         }
         catch (Exception e) {
             LOG.warn("Could not initialize LinguaBaseImportModule", e);

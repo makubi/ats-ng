@@ -2,10 +2,12 @@ package at.makubi.services;
 
 import at.makubi.Task;
 import at.makubi.module.importer.ImportModule;
+import org.apache.tapestry5.upload.services.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,11 +51,15 @@ public class ImportModuleServiceImpl implements ImportModuleService {
     }
 
     @Override
-    public void importFromFile(final ImportModule importModule, final File file) {
-        taskService.addTask(new Task("Importing " + file.getName() + " with module " + importModule.getClass().getSimpleName()) {
+    public void importFromFile(final ImportModule importModule, final UploadedFile file) {
+        taskService.addTask(new Task("Importing " + file.getFileName() + " with module " + importModule.getClass().getSimpleName()) {
             @Override
-            public void execute() {
-                entryService.createEntries(importModule.getEntriesForImport(file, languageService.getAvailableLanguages()));
+            public void execute() throws Exception {
+                final File localFile = File.createTempFile("ats.",".tmp");
+
+                file.write(localFile);
+
+                entryService.createEntries(importModule.getEntriesForImport(localFile, languageService.getAvailableLanguages()));
             }
         });
     }

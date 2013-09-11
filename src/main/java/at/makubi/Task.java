@@ -1,9 +1,11 @@
 package at.makubi;
 
+import java.io.IOException;
+
 public abstract class Task {
 
     private final String name;
-    private Status status = Status.WAITING;
+    private String message = Status.WAITING.toString();
 
     public Task(String name) {
         this.name = name;
@@ -17,17 +19,23 @@ public abstract class Task {
         return name;
     }
 
-    public Status getStatus() {
-        synchronized (status) {
-            return status;
-        }
-    }
-
     public void setStatus(Status status) {
-        synchronized (this.status) {
-            this.status = status;
+        synchronized (this.message) {
+            this.message = status.toString();
         }
     }
 
-    public abstract void execute();
+    public String getStatus() {
+        synchronized (message) {
+            return message;
+        }
+    }
+
+    public void setStatus(String message) {
+        synchronized (this.message) {
+            this.message = message;
+        }
+    }
+
+    public abstract void execute() throws Exception;
 }
