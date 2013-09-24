@@ -1,0 +1,41 @@
+<html t:type="layout" title="Export"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <p>
+        <t:form t:type="form" t:id="uploadFileForm">
+            <t:errors/>
+            <input t:type="upload" t:id="uploadedFile" t:value="uploadedFile" validate="required"/>
+            <br />
+            <br/>
+            <t:radiogroup t:id="selectedModule" validate="required">
+                <t:loop source="availableModules" value="currentModule">
+                    <t:radio t:id="radio" value="currentModule"/>
+                    <t:label for="radio">${simpleName}</t:label>
+                    <br />
+                </t:loop>
+            </t:radiogroup>
+            <br />
+            <br />
+            <input type="submit" value="Upload"/>
+        </t:form>
+    </p>
+
+    <t:zone t:id="zone" t:mixins="ZoneRefresh" t:period="3">
+        <t:loop source="downloadFiles" value="currentFile">
+            <ul>
+                <li>
+                    <t:if test="currentFile.ready">
+                        <t:actionLink t:id="downloadFileLink" context="${currentFile.id}">${currentFile.fileName}</t:actionLink>
+                        <p:else>
+                            ${currentFile.fileName}
+                        </p:else>
+                    </t:if>
+
+                </li>
+            </ul>
+        </t:loop>
+
+    </t:zone>
+
+</html>

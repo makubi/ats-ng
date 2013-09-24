@@ -2,7 +2,7 @@
 <suite name="ats Application Test Suite" annotations="1.5">
     <test name="Unit Tests">
         <packages>
-            <package name="at.makubi"/>
+            <package name="at.makubi.ats"/>
         </packages>
     </test>
 </suite>

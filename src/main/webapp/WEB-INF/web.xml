@@ -8,7 +8,7 @@
         <!-- The only significant configuration for Tapestry 5, this informs Tapestry
 of where to look for pages, components and mixins. -->
         <param-name>tapestry.app-package</param-name>
-        <param-value>at.makubi</param-value>
+        <param-value>at.makubi.ats.tapestry</param-value>
     </context-param>
     <!--
     Specify some additional Modules for two different execution
@@ -18,13 +18,13 @@ of where to look for pages, components and mixins. -->
     <context-param>
         <param-name>tapestry.development-modules</param-name>
         <param-value>
-            at.makubi.services.DevelopmentModule
+            at.makubi.ats.tapestry.services.DevelopmentModule
         </param-value>
     </context-param>
     <context-param>
         <param-name>tapestry.qa-modules</param-name>
         <param-value>
-            at.makubi.services.QaModule
+            at.makubi.ats.tapestry.services.QaModule
         </param-value>
     </context-param>
 
@@ -60,7 +60,7 @@ of where to look for pages, components and mixins. -->
         <!--<init-param>-->
             <!--<param-name>contextConfigLocation</param-name>-->
             <!--<param-value>-->
-                <!--at.makubi.ApplicationConfig-->
+                <!--at.makubi.ats.ApplicationConfig-->
             <!--</param-value>-->
         <!--</init-param>-->
     <!--</servlet>-->

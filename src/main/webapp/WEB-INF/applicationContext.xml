@@ -9,5 +9,5 @@
 
     <context:annotation-config/>
 
-    <bean class="at.makubi.ApplicationConfig" />
+    <bean class="at.makubi.ats.ApplicationConfig" />
 </beans>
