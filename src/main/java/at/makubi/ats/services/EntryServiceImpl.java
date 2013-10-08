@@ -38,10 +38,24 @@ public class EntryServiceImpl implements EntryService {
     @Override
     public Iterable<Entry> getAllEntriesWithText(String text) {
         final Collection<Entry> textsContaining = makeCollection(entryRepository.findByTexts_TextIgnoreCaseContaining(text));
-        final Collection<Entry> identifierContaining = makeCollection(entryRepository.findByIdentifier_TextIgnoreCaseContaining(text));
-        textsContaining.addAll(identifierContaining);
+
+        for(Entry entry : entryRepository.findByIdentifier_TextIgnoreCaseContaining(text)) {
+            if(!collectionContains(textsContaining, entry)) {
+                textsContaining.add(entry);
+            }
+        }
 
         return textsContaining;
+    }
+
+    private boolean collectionContains(Collection<Entry> entries, Entry entry) {
+        for(Entry entry1 : entries) {
+            if(entry1.getIdentifier().getText().equals(entry.getIdentifier().getText())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public static <E> Collection<E> makeCollection(Iterable<E> iter) {
